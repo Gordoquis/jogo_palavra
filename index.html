@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo das Palavras</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+    <!-- ÁUDIOS -->
+    <audio id="sound-start" src="michael-jackson-hee-hee.mp3"></audio>
+    <audio id="sound-hit" src="acertou-mizeravijk_eifzvEs.mp3"></audio>
+    <audio id="sound-wrong" src="vinheta-faustao-errou-rede-globo.mp3"></audio>
+    <audio id="sound-time" src="relogio-tic-tac.mp3"></audio>
+
+    <div class="container">
+        <h1>Jogo das Palavras</h1>
+
+        <div id="setup-container">
+            <input type="text" id="nickname-input" placeholder="Digite seu nickname..." onkeypress="iniciarJogo(event)">
+            <p class="hint-text">Pressione Enter para começar</p>
+        </div>
+
+        <div id="game-container" class="hidden">
+            <h2 id="player-display"></h2>
+
+            <p id="hint-display" class="hint-box"></p>
+
+            <div id="word-display" class="word-slots"></div>
+
+            <div class="input-group">
+                <input type="text" id="letter-input" maxlength="1" placeholder="Letra" onkeypress="tentarLetra(event)">
+            </div>
+
+            <div class="status-info">
+                <p>Erros: <span id="error-count">0</span> / 4</p>
+                <p id="timer">Tempo: 0s</p>
+                <p id="game-message"></p>
+            </div>
+
+            <button id="reset-btn" class="hidden" onclick="reiniciarJogo()">Jogar Novamente</button>
+        </div>
+    </div>
+
+    <footer>
+        Desenvolvido por Giovana Junho
+    </footer>
+
+    <script src="index.js"></script>
+</body>
+</html>
