@@ -21,6 +21,18 @@
             <input type="text" id="nickname-input" placeholder="Digite seu nickname..." onkeypress="iniciarJogo(event)">
             <p class="hint-text">Pressione Enter para começar</p>
         </div>
+         <div class="level-selection" style="margin-top: 15px; display: flex; gap: 8px; justify-content: center;">
+        <button onclick="iniciarJogoPorNivel('facil')" style="background-color: #28a745;">Fácil</button>
+        <button onclick="iniciarJogoPorNivel('medio')" style="background-color: #ffc107; color: black;">Médio</button>
+        <button onclick="iniciarJogoPorNivel('dificil')" style="background-color: #dc3545;">Difícil</button>
+    </div>
+    
+    <p class="instruction">Escolha um nível para começar e clique Enter</p>
+    <br>
+    <p class="instruction"> Fácil: ~5 letras <br>
+        Médio: ~6 a 10 letras <br>
+        Difícil: ~+10 letras
+    </p>
 
         <div id="game-container" class="hidden">
             <h2 id="player-display"></h2>

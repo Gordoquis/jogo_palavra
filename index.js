@@ -15,6 +15,9 @@ const soundHit = document.getElementById('sound-hit')
 const soundWrong = document.getElementById('sound-wrong')
 const soundTime = document.getElementById('sound-time')
 
+const botoes = document.querySelectorAll('.nivel-btn button')
+
+let nivelSelecionado = 'facil'
 // TIMER / CONTROLE
 let tempo = 50
 let timer
@@ -54,48 +57,58 @@ function iniciarTimer() {
     }, 1000)
 }
 
+function selecionarNivel(nivel) {
+    nivelSelecionado = nivel;
+    botoes.forEach(btn => btn.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+    console.log("Nível selecionado:", nivel);
+}
+
 // =========================
 // INICIAR JOGO
 // =========================
-async function iniciarJogo(event) {
-    if (event.key === "Enter") {
+async function iniciarJogoPorNivel(nivel) {
+    const nicknameInput = document.getElementById('nickname-input');
+    const nickname = nicknameInput.value;
 
-        const nickname = document.getElementById('nickname-input').value
+    if (!nickname) {
+        alert('Por favor, digite seu nickname antes de escolher o nível!');
+        return;
+    }
 
-        if (!nickname) {
-            alert('Preencha o nickname!')
-            return
-        }
-
-        // reset estado
-        tempo = 50
-        jogoAtivo = true
-
-        soundStart.play()
-
+    try {
         const response = await fetch(`${URL_API}/iniciar`, {
             method: 'POST',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ nickname })
-        })
+            body: JSON.stringify({ 
+                nickname: nickname,
+                nivel: nivel // Envia o nível selecionado para a API
+            })
+        });
 
-        const data = await response.json()
+        const data = await response.json();
 
         if (data.erro) {
-            alert(data.erro)
-            return
+            alert(data.erro);
+            return;
         }
 
-        setupContainer.classList.add('hidden')
-        gameContainer.classList.remove('hidden')
-
-        document.getElementById('player-display').innerText = data.mensagem
-
-        iniciarTimer()
-        buscarPalavra()
+        // Esconde o setup e mostra o jogo
+        setupContainer.classList.add('hidden');
+        gameContainer.classList.remove('hidden');
+        
+        // Exibe saudação com o nível escolhido
+        document.getElementById('player-display').innerText = `Boa sorte, ${nickname}! Nível: ${nivel.toUpperCase()}`;
+        
+        buscarPalavra(); // Inicia a busca da palavra e dica
+    } catch (error) {
+        console.error("Erro na conexão:", error);
+        alert("Não foi possível conectar à API.");
     }
 }
+
+
 
 // =========================
 // BUSCAR PALAVRA + DICA
